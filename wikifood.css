@@ -1,36 +1,20 @@
-.bg-orange {
-  background-color: #f57c00; /* tom vibrante de laranja */
-}
 
-.navbar .nav-link,
-.navbar .navbar-brand {
-  color: #ffffff; /* texto branco */
-}
-
-.navbar .nav-link:hover,
-.navbar .navbar-brand:hover {
-  color: #ffe0b2; /* branco suave ao passar o mouse */
-}
-
-.bg-orange {
-  background-color: #f57c00;
-}
-
-footer a:hover {
-  text-decoration: underline;
-  color: #ffe0b2; /* tom claro para hover */
-}
 /* Fundo geral do site */
 body {
-
-font-weight: Arial, sans-serif; background:#f57c00; padding:20px;
+  font-family: Arial, sans-serif;
+  font-weight: normal; /* ou 400 */
+  margin: 0;
+  padding: 0;
 }
 .btn-outline-white:hover {
   background-color: #ffffff;
   color: #f57c00;
 }
 h2 { text-align:center;
-  color: #ccc;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* deslocamento X, Y, desfoque, cor */
+  font-weight: bold;
+
 }
   .receita { background:#fff; padding:15px; margin-bottom:15px; border-radius:8px; box-shadow:0 0 5px rgba(0,0,0,0.1); }
 .title {
@@ -55,3 +39,95 @@ h2 { text-align:center;
   transform: scale(1.1); /* Efeito de zoom ao passar o mouse */
 }
   .container { max-width:800px; margin:auto; }
+
+  .content {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+}
+
+.background-container {
+  background-image: url('wikifundo.jpg');
+  background-size: 105%;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+    background-attachment: fixed;
+}
+.voltar-topo {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.voltar-topo:hover {
+  background-color: #e65c00;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ff6600;
+  color: white;
+  position: sticky;
+  top: 0;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 35px;
+  margin-right: 20px;
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #ffe6cc;
+}
+
+.footer {
+  background-color:#ff6600;
+  color: #ffffff;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+}
+.navbar, .footer, .voltar-topo, .nav-links li a {
+  transition: all 0.3s ease;
+}
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+    background-color: #ff6600;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    display: none;
+  }
+
+  .navbar.active .nav-links {
+    display: flex;
+  }
+}
