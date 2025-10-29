@@ -1,0 +1,226 @@
+body {
+    background-color: #F8F5E9; /* Light Yellow/Cream from PDF */
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.company-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.company-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.company-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.company-category {
+    background-color: #5C8D5C; /* Green from PDF */
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.company-status {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-active {
+    background: rgba(92, 141, 92, 0.2); /* Light Green */
+    color: #5C8D5C; /* Green from PDF */
+    border: 1px solid rgba(92, 141, 92, 0.3);
+}
+
+.status-inactive {
+    background: rgba(231, 76, 60, 0.2); /* Light Red */
+    color: #E74C3C; /* Red from PDF */
+    border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+.contact-info {
+    background: rgba(92, 141, 92, 0.1); /* Light Green */
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.contact-item i {
+    width: 20px;
+    color: #5C8D5C; /* Green from PDF */
+    margin-right: 10px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #5C8D5C; /* Green from PDF */
+}
+
+.empty-state i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+
+.btn-add-company {
+    background-color: #F7DC6F; /* Yellow from PDF */
+    border: none;
+    border-radius: 50px;
+    padding: 12px 30px;
+    color: #5C8D5C; /* Green from PDF */
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(247, 220, 111, 0.3);
+}
+
+.btn-add-company:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(247, 220, 111, 0.4);
+    color: #5C8D5C; /* Green from PDF */
+}
+
+.search-box {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(92, 141, 92, 0.3); /* Green from PDF */
+    border-radius: 25px;
+    padding: 12px 20px;
+    backdrop-filter: blur(10px);
+}
+
+.search-box:focus {
+    outline: none;
+    box-shadow: 0 0 20px rgba(92, 141, 92, 0.3); /* Green from PDF */
+    border-color: #5C8D5C; /* Green from PDF */
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.filter-btn {
+    background: rgba(92, 141, 92, 0.2); /* Light Green */
+    border: 1px solid rgba(92, 141, 92, 0.3); /* Green from PDF */
+    color: #5C8D5C; /* Green from PDF */
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: #F7DC6F; /* Yellow from PDF */
+    color: #5C8D5C; /* Green from PDF */
+    border-color: rgba(247, 220, 111, 0.5);
+}
+
+.loading-spinner {
+    display: none;
+    text-align: center;
+    padding: 40px;
+    color: #5C8D5C; /* Green from PDF */
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.company-actions {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    display: flex;
+    gap: 5px;
+}
+
+.action-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+.delete-btn:hover {
+    background: #E74C3C; /* Red from PDF */
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #F39C12; /* Orange from PDF */
+    color: white;
+}
+
+.view-btn:hover {
+    background: #5C8D5C; /* Green from PDF */
+    color: white;
+}
+
+.company-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.stars {
+    color: #F7DC6F; /* Yellow from PDF */
+}
+
