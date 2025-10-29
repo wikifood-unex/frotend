@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>WikiFood - Usuário & Receitas</title>
+<link rel="stylesheet" href="cadastros.css">
+</head>
+<body>
+<div class="card">
+  <h2 id="form-title">Login - WikiFood</h2>
+
+  <!-- LOGIN -->
+  <div id="login-form" class="form-section active">
+    <label>E-mail</label>
+    <input id="login-email" type="email" placeholder="seu@exemplo.com">
+    <label>Senha</label>
+    <input id="login-password" type="password" placeholder="Sua senha">
+    <button id="btn-login">Entrar</button>
+    <div class="toggle-form">
+      Não tem conta? <a id="link-register">Cadastre-se</a>
+    </div>
+  </div>
+
+  <!-- CADASTRO -->
+  <div id="register-form" class="form-section">
+    <label>Nome</label>
+    <input id="register-name" type="text" placeholder="Seu nome completo">
+    <label>E-mail</label>
+    <input id="register-email" type="email" placeholder="seu@exemplo.com">
+    <label>Senha</label>
+    <input id="register-password" type="password" placeholder="Senha (mínimo 6 caracteres)">
+    <button id="btn-register">Cadastrar</button>
+    <div class="toggle-form">
+      Já tem conta? <a id="link-login">Entrar</a>
+    </div>
+  </div>
+
+  <!-- CADASTRO DE RECEITA -->
+  <div id="recipe-section" class="form-section">
+    <label>Título da Receita</label>
+    <input id="recipe-title" type="text" placeholder="Título">
+    <label>História / Preparo</label>
+    <textarea id="recipe-lore" rows="4"></textarea>
+    <label>Ingredientes (separados por vírgula)</label>
+    <textarea id="recipe-ingredients" rows="2"></textarea>
+    <label>Imagem</label>
+    <input type="file" id="recipe-image" accept="image/*">
+    <button id="btn-add-recipe">Cadastrar Receita</button>
+    <button id="btn-skip" class="secondary">Pular e Ir para Página Inicial</button>
+    <button id="btn-logout" class="logout">Sair</button>
+  </div>
+
+  <div id="message" class="msg"></div>
+</div>
+
+<script src="cadastros.js"></script>
+</body>
+</html>
