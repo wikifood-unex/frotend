@@ -1,0 +1,57 @@
+.bg-orange {
+  background-color: #f57c00; /* tom vibrante de laranja */
+}
+
+.navbar .nav-link,
+.navbar .navbar-brand {
+  color: #ffffff; /* texto branco */
+}
+
+.navbar .nav-link:hover,
+.navbar .navbar-brand:hover {
+  color: #ffe0b2; /* branco suave ao passar o mouse */
+}
+
+.bg-orange {
+  background-color: #f57c00;
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: #ffe0b2; /* tom claro para hover */
+}
+/* Fundo geral do site */
+body {
+
+font-weight: Arial, sans-serif; background:#f57c00; padding:20px;
+}
+.btn-outline-white:hover {
+  background-color: #ffffff;
+  color: #f57c00;
+}
+h2 { text-align:center;
+  color: #ccc;
+}
+  .receita { background:#fff; padding:15px; margin-bottom:15px; border-radius:8px; box-shadow:0 0 5px rgba(0,0,0,0.1); }
+.title {
+   font-weight:700; 
+   font-size:18px; 
+  }
+.description { 
+  margin-top:8px; 
+  }
+ .placeholder-img { width:100%; height:150px; background:#ccc; border-radius:6px; display:flex; align-items:center; justify-content:center; color:#555; font-weight:600; margin-bottom:10px; }
+
+.icon-image {
+  width: 48px;           /* Tamanho padrão de ícone */
+  height: 48px;
+  border-radius: 8px;    /* Bordas arredondadas */
+  object-fit: cover;     /* Garante que a imagem se encaixe sem distorcer */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Sombra leve para destacar */
+  transition: transform 0.3s ease;
+}
+
+.icon-image:hover {
+  transform: scale(1.1); /* Efeito de zoom ao passar o mouse */
+}
+  .container { max-width:800px; margin:auto; }
