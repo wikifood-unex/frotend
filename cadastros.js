@@ -50,7 +50,7 @@ document.getElementById('btn-register').addEventListener('click', async ()=>{
   else showMessage(result.payload?.message||'Erro no cadastro');
 });
 
-// CADASTRO RECEITA (SEM IMAGEM)
+// CADASTRO RECEITA (com campo de URL da imagem)
 document.getElementById('btn-add-recipe').addEventListener('click', async () => {
   const token = localStorage.getItem('authToken');
   if (!token) {
@@ -60,10 +60,11 @@ document.getElementById('btn-add-recipe').addEventListener('click', async () => 
 
   const title = document.getElementById('recipe-title').value.trim();
   const lore = document.getElementById('recipe-lore').value.trim();
-  const description = lore; // Se a API espera description, podemos usar a mesma coisa
-  // Aqui você pode adicionar ingredients se quiser, mas pelo JSON que você mandou não é obrigatório
+  const imageUrl = document.getElementById('recipe-image').value.trim(); // novo campo
+  const description = lore;
+
   if (!title || !lore) {
-    showMessage('Preencha todos os campos!');
+    showMessage('Preencha todos os campos obrigatórios!');
     return;
   }
 
@@ -71,7 +72,8 @@ document.getElementById('btn-add-recipe').addEventListener('click', async () => 
     title,
     lore,
     description,
-    recommendations: [] // deixa vazio por enquanto
+    image: imageUrl || null, // envia a URL se tiver, senão manda null
+    recommendations: []
   };
 
   showMessage('Enviando receita...', 'success');
@@ -81,6 +83,7 @@ document.getElementById('btn-add-recipe').addEventListener('click', async () => 
     showMessage('Receita cadastrada com sucesso!', 'success');
     document.getElementById('recipe-title').value = '';
     document.getElementById('recipe-lore').value = '';
+    document.getElementById('recipe-image').value = ''; // limpa o campo da imagem
   } else {
     showMessage(result.payload?.message || 'Erro ao cadastrar receita', 'error');
   }
