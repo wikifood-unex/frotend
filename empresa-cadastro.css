@@ -1,247 +1,80 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-    background-color: #F8F5E9; /* Light Yellow/Cream from PDF */
-    min-height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(120deg, #ffe6cc, #ffcc99, #ffd9a6);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
 }
 
-.header {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.company-header {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 30px;
-    margin-bottom: 30px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    position: relative;
+/* Container do formulário destaca com sombra e bordas arredondadas */
+.form-container {
+  background: rgba(255, 255, 255, 0.92);
+  padding: 36px;
+  width: 760px;
+  border-radius: 28px;
+  box-shadow: 0 15px 40px rgb(255 184 77 / 0.7);
+  color: #444;
 }
 
-.company-logo {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 5px solid #fff;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+/* Inputs estilizados */
+input, select, textarea {
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 14px;
+  margin-top: 6px;
+  margin-bottom: 24px;
+  border-radius: 16px;
+  border: 2px solid #d7b46a;
+  background: #fdf5e6;
+  transition: 0.4s ease;
 }
 
-.company-status {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
+input:focus, select:focus, textarea:focus {
+  border-color: #ffa600;
+  outline: none;
+  box-shadow: 0 0 10px 2px #ffc107b8;
 }
 
-.status-active {
-    background: rgba(92, 141, 92, 0.2); /* Light Green */
-    color: #5C8D5C; /* Green from PDF */
-    border: 2px solid rgba(92, 141, 92, 0.3);
+/* Botões com gradiente e hover */
+button {
+  background: linear-gradient(45deg, #ffa600, #f7b733);
+  color: #fff;
+  font-weight: 700;
+  padding: 14px;
+  border-radius: 22px;
+  border: none;
+  width: 100%;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.status-inactive {
-    background: rgba(231, 76, 60, 0.2); /* Light Red */
-    color: #E74C3C; /* Red from PDF */
-    border: 2px solid rgba(231, 76, 60, 0.3);
+button:hover {
+  background: linear-gradient(45deg, #f7b733, #ffa600);
+  box-shadow: 0 8px 18px rgb(255 167 0 / 0.65);
 }
 
-.company-category {
-    background-color: #5C8D5C; /* Green from PDF */
-    color: white;
-    padding: 6px 16px;
-    border-radius: 25px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    display: inline-block;
-    margin-bottom: 15px;
+/* Labels mais suaves e uniformes */
+label {
+  font-weight: 600;
+  color: #8b6b1e;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  display: block;
+  margin-bottom: 4px;
 }
-
-.contact-info {
-    background: rgba(92, 141, 92, 0.1); /* Light Green */
-    border-radius: 15px;
-    padding: 20px;
-    margin-top: 20px;
-}
-
-.contact-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-    font-size: 1rem;
-}
-
-.contact-item i {
-    width: 25px;
-    color: #5C8D5C; /* Green from PDF */
-    margin-right: 15px;
-    font-size: 1.1rem;
-}
-
-.company-rating {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.stars {
-    color: #F7DC6F; /* Yellow from PDF */
-    font-size: 1.2rem;
-}
-
-.rating-text {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #5C8D5C; /* Green from PDF */
-}
-
-.menu-section {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
-
-.menu-item {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(92, 141, 92, 0.1); /* Light Green */
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 20px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.menu-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-}
-
-.menu-item-image {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 12px;
-    border: 2px solid #fff;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.menu-item-price {
-    background-color: #5C8D5C; /* Green from PDF */
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    position: absolute;
-    top: 15px;
-    right: 15px;
-}
-
-.menu-category-badge {
-    background: rgba(92, 141, 92, 0.1); /* Light Green */
-    color: #5C8D5C; /* Green from PDF */
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    display: inline-block;
-    margin-bottom: 10px;
-}
-
-.ingredients-list {
-    background: rgba(92, 141, 92, 0.05); /* Lighter Green */
-    border-radius: 10px;
-    padding: 12px;
-    margin-top: 12px;
-}
-
-.ingredient-tag {
-    background: rgba(92, 141, 92, 0.1); /* Light Green */
-    color: #5C8D5C; /* Green from PDF */
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    margin: 2px;
-    display: inline-block;
-}
-
-.empty-menu {
-    text-align: center;
-    padding: 60px 20px;
-    color: #5C8D5C; /* Green from PDF */
-}
-
-.empty-menu i {
-    font-size: 3rem;
-    margin-bottom: 20px;
-    opacity: 0.5;
-}
-
-.btn-back {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: #5C8D5C; /* Green from PDF */
-    border-radius: 25px;
-    padding: 10px 20px;
-    transition: all 0.3s ease;
-}
-
-.btn-back:hover {
-    background: rgba(255, 255, 255, 0.9);
-    color: #5C8D5C; /* Green from PDF */
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
-.loading-spinner {
-    display: none;
-    text-align: center;
-    padding: 40px;
-    color: #5C8D5C; /* Green from PDF */
-}
-
-.fade-in {
-    animation: fadeIn 0.5s ease-in;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.section-title {
-    color: #5C8D5C; /* Green from PDF */
-    font-weight: 700;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.section-title i {
-    color: #5C8D5C; /* Green from PDF */
-}
-
-.menu-search {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(92, 141, 92, 0.2); /* Light Green */
-    border-radius: 25px;
-    padding: 12px 20px;
-    margin-bottom: 25px;
-}
-
-.menu-search:focus {
-    outline: none;
-    box-shadow: 0 0 15px rgba(92, 141, 92, 0.2); /* Light Green */
-    border-color: #5C8D5C; /* Green from PDF */
-}
-

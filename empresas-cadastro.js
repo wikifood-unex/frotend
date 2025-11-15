@@ -1,54 +1,38 @@
+document.getElementById('formCadastro').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    await salvarEmpresa();
+});
+
+function mostrarMensagem(mensagem, tipo) {
+    const msgDiv = document.getElementById('msgCadastro');
+    msgDiv.className = `alert alert-${tipo}`;
+    msgDiv.textContent = mensagem;
+    msgDiv.style.display = 'block';
+    if (tipo === 'success') setTimeout(() => { msgDiv.style.display = 'none'; }, 3000);
+}
+
 async function salvarEmpresa() {
     const token = localStorage.getItem('authToken');
-    
-    console.log('Token:', token);
-    
     if (!token) {
-        document.getElementById('msgCadastro').innerHTML = 
-            '<div class="alert alert-warning">Você precisa fazer <a href="cadastros.html">login</a> primeiro!</div>';
+        mostrarMensagem("Você precisa estar logado para cadastrar uma empresa.", "danger");
         return;
     }
 
-    const nome = document.getElementById('nomeEmpresa').value.trim();
-    const cepCode = document.getElementById('cep').value.trim();
-    const rua = document.getElementById('rua').value.trim();
-    const cidade = document.getElementById('cidade').value.trim();
-    const bairro = document.getElementById('bairro').value.trim();
-    const estado = document.getElementById('estado').value;
-
-    if (!nome || !cepCode || !estado) {
-        document.getElementById('msgCadastro').innerHTML = 
-            '<div class="alert alert-danger">Preencha todos os campos obrigatórios!</div>';
-        return;
-    }
-
-    const novoRestaurante = {
-        name: nome,
-        cep: {
-            code: cepCode,
-            street: rua,
-            city: cidade,
-            neighborhood: bairro,
-            state: estado
-        }
+    const novaEmpresa = {
+        name: document.getElementById('nomeEmpresa').value.trim(),
+        type: document.getElementById('tipoEmpresa').value.trim(),
+        cnpj: document.getElementById('cnpj').value.trim(),
+        cep: document.getElementById('cep').value.trim(),
+        addressNumber: document.getElementById('numero').value.trim(),
+        addressComplement: document.getElementById('endereco').value.trim(), // campo "endereço" (era complemento)
+        phone: document.getElementById('telefone').value.trim(),
+        email: document.getElementById('email').value.trim()
     };
 
-    console.log("Enviando:", novoRestaurante);
-
-    const response = await makeRequest("/Restaurant", novoRestaurante, token, "POST");
-    
-    console.log("Resposta:", response);
-
-    if (response.ok && response.payload) {
-        document.getElementById('msgCadastro').innerHTML = 
-            '<div class="alert alert-success">Empresa cadastrada!</div>';
-        setTimeout(() => window.location.href = 'empresas-listagem.html', 1500);
-    } else if (response.status === 401) {
-        localStorage.removeItem('authToken');
-        document.getElementById('msgCadastro').innerHTML = 
-            '<div class="alert alert-danger">Sessão expirada! <a href="cadastros.html">Faça login novamente</a></div>';
+    const response = await makeRequest("Company", novaEmpresa, token, "POST");
+    if (response.ok && response.payload && response.payload.id) {
+        window.location.href = `empresa-detalhes.html?id=${response.payload.id}`;
     } else {
-        document.getElementById('msgCadastro').innerHTML = 
-            `<div class="alert alert-danger">Erro: ${JSON.stringify(response.payload)}</div>`;
+        mostrarMensagem("Erro ao cadastrar empresa: " + (response.payload?.message || JSON.stringify(response.payload)), "danger");
     }
 }

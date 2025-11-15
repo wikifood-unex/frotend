@@ -1,82 +1,95 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastrar Empresa</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Empresa - WikiFood</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .form-container { max-width: 800px; margin: 50px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .preview-logo { max-width: 200px; max-height: 200px; margin-top: 10px; display: none; border-radius: 8px; }
+    </style>
 </head>
 <body>
-    <div class="container mt-5" style="max-width: 600px">
-        <h2 class="mb-4">Cadastrar Nova Empresa</h2>
-        
-        <!-- Preview da Logo -->
-        <div class="text-center mb-4">
-            <img src="https://drive.google.com/uc?export=view&id=1I4fjumfdI6Etv4QnzWLUlx__oyct0NTb" 
-                 alt="Logo da Empresa" 
-                 style="width: 120px; height: 120px; object-fit: cover; border-radius: 10px; border: 2px solid #ddd;">
-            <p class="text-muted mt-2">Logo padrão será usada automaticamente</p>
-        </div>
-        
-        <form id="empresaForm">
+    
+    
+<div class="container">
+    <div class="form-container">
+        <h2 class="text-center mb-4">Cadastro de Empresa</h2>
+        <form id="formCadastro">
+
+            <!-- Logo da Empresa -->
             <div class="mb-3">
-                <label>Nome *</label>
-                <input type="text" id="nomeEmpresa" class="form-control" required>
+                <label for="logoEmpresa" class="form-label">Logo da Empresa</label>
+                <input type="file" class="form-control" id="logoEmpresa" accept="image/*">
+                <img id="previewLogo" class="preview-logo" alt="Preview da logo">
+                <small class="form-text text-muted">Formatos aceitos: JPG, PNG, GIF (máx. 5MB)</small>
             </div>
+
+            <!-- Tipo de Empresa -->
             <div class="mb-3">
-                <label>CEP *</label>
-                <input type="text" id="cep" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label>Rua</label>
-                <input type="text" id="rua" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label>Bairro</label>
-                <input type="text" id="bairro" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label>Cidade</label>
-                <input type="text" id="cidade" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label>Estado (UF) *</label>
-                <select id="estado" class="form-control" required>
-                    <option value="">Selecione...</option>
-                    <option value="Ac">AC</option>
-                    <option value="Al">AL</option>
-                    <option value="Ap">AP</option>
-                    <option value="Am">AM</option>
-                    <option value="Ba">BA</option>
-                    <option value="Ce">CE</option>
-                    <option value="Df">DF</option>
-                    <option value="Es">ES</option>
-                    <option value="Go">GO</option>
-                    <option value="Ma">MA</option>
-                    <option value="Mt">MT</option>
-                    <option value="Ms">MS</option>
-                    <option value="Mg">MG</option>
-                    <option value="Pa">PA</option>
-                    <option value="Pb">PB</option>
-                    <option value="Pr">PR</option>
-                    <option value="Pe">PE</option>
-                    <option value="Pi">PI</option>
-                    <option value="Rj">RJ</option>
-                    <option value="Rn">RN</option>
-                    <option value="Rs">RS</option>
-                    <option value="Ro">RO</option>
-                    <option value="Rr">RR</option>
-                    <option value="Sc">SC</option>
-                    <option value="Sp">SP</option>
-                    <option value="Se">SE</option>
-                    <option value="To">TO</option>
+                <label for="tipoEmpresa" class="form-label">Tipo de Empresa</label>
+                <select class="form-select" id="tipoEmpresa" required>
+                    <option value="">Selecione o tipo</option>
+                    <option value="Bar">Bar</option>
+                    <option value="Restaurante">Restaurante</option>
+                    <option value="Pizzaria">Pizzaria</option>
+                    <option value="Cafeteria">Cafeteria</option>
+                    <option value="Lanchonete">Lanchonete</option>
+                    <option value="Sorveteria">Sorveteria</option>
+                    <option value="Hamburgueria">Hamburgueria</option>
+                    <option value="Padaria">Padaria</option>
+                    <option value="Food Truck">Food Truck</option>
+                    <option value="Outro">Outro</option>
                 </select>
             </div>
-            <button type="button" class="btn btn-success" onclick="salvarEmpresa()">Cadastrar Empresa</button>
-            <a href="empresas-listagem.html" class="btn btn-secondary">Voltar</a>
+
+            <div class="mb-3">
+                <label for="nomeEmpresa" class="form-label">Nome da Empresa</label>
+                <input type="text" class="form-control" id="nomeEmpresa" required>
+            </div>
+            <div class="mb-3">
+                <label for="cnpj" class="form-label">CNPJ</label>
+                <input type="text" class="form-control" id="cnpj" maxlength="18" required>
+            </div>
+            <div class="mb-3">
+                <label for="telefone" class="form-label">Telefone</label>
+                <input type="text" class="form-control" id="telefone" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+
+            <hr class="my-4">
+            <h5>Endereço</h5>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="cep" class="form-label">CEP</label>
+                    <input type="text" class="form-control" id="cep" maxlength="9" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="endereco" class="form-label">Endereço</label>
+                    <input type="text" class="form-control" id="endereco" placeholder="Av Francisco Ribeiro Jr, Centro itabuna Bahia" required>
+                    <div class="form-text">Exemplo: Av Francisco Ribeiro Jr, Centro itabuna Bahia</div>
+                </div>
+                <div class="col-md-4">
+                    <label for="numero" class="form-label">Número</label>
+                    <input type="text" class="form-control" id="numero" required>
+                </div>
+                
+            </div>
+
+            <div id="msgCadastro" class="alert" style="display: none;"></div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Cadastrar Empresa</button>
+                <a href="empresas-listagem.html" class="btn btn-secondary">Voltar</a>
+            </div>
         </form>
-        <div id="msgCadastro" class="mt-3"></div>
     </div>
-    <script src="utils.js"></script>
-    <script src="empresas-cadastro.js"></script>
+</div>
+<script src="utils.js"></script>
+<script src="empresas-cadastro.js"></script>
 </body>
 </html>

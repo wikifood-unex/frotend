@@ -8,20 +8,30 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <header class="header py-3 mb-4">
-        <div class="container d-flex justify-content-between align-items-center">
-            <span class="h4 mb-0 text-dark">Empresas Cadastradas</span>
-            <button class="btn btn-add-company" onclick="window.location.href='empresas-cadastro.html'">
-                + Cadastrar Empresa
-            </button>
+    <!-- Navbar WikiFood -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+      <div class="container-fluid">
+        <div class="logo">
+          WikiFood <img src="logo-padrao.jpg" alt="" class="icon-image ms-2">
         </div>
-    </header>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 nav-links d-flex align-items-center" style="gap: 1rem;">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Início</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="cadastros.html">Cadastre-se aqui!</a>
+          </li>
+          <li>
+            <button class="btn btn-add-company ms-3" onclick="window.location.href='empresas-cadastro.html'">Cadastrar Empresa</button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
     <div class="container">
-        <input type="text" id="searchInput" class="form-control search-box mb-4" placeholder="Buscar empresas por nome, cidade ou estado...">
-        
-        <!-- FILTROS REMOVIDOS -->
-        
-        <div class="loading-spinner" id="loadingSpinner">
+        <input type="text" id="searchInput" class="form-control search-box mb-4" placeholder="Buscar empresas...">
+        <div class="loading-spinner" id="loadingSpinner" style="display: none;">
             <div class="spinner-border" role="status"></div>
             <p class="mt-3">Carregando empresas...</p>
         </div>
@@ -30,9 +40,7 @@
             <i class="fas fa-building"></i>
             <h4>Nenhuma empresa cadastrada</h4>
             <p class="mb-4">Cadastre a primeira empresa agora mesmo.</p>
-            <button class="btn btn-add-company" onclick="window.location.href='empresas-cadastro.html'">
-                <i class="fas fa-plus me-1"></i> Cadastrar Empresa
-            </button>
+            <button class="btn btn-add-company" onclick="window.location.href='empresas-cadastro.html'"><i class="fas fa-plus me-1"></i> Cadastrar Empresa</button>
         </div>
     </div>
     <script src="utils.js"></script>
