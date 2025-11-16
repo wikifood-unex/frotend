@@ -1,6 +1,16 @@
 let empresaAtual = null;
 const LOGOPADRAO = "logo-padrao.jpg";
 
+const DIAS_PT = {
+    sunday: 'Domingo',
+    monday: 'Segunda-feira',
+    tuesday: 'Terça-feira',
+    wednesday: 'Quarta-feira',
+    thursday: 'Quinta-feira',
+    friday: 'Sexta-feira',
+    saturday: 'Sábado'
+};
+
 window.addEventListener("DOMContentLoaded", async () => {
     await carregarEmpresa();
     document.getElementById('cardapioForm')?.addEventListener('submit', adicionarItemCardapio);
@@ -19,7 +29,7 @@ async function carregarEmpresa() {
     if (response.ok && response.payload) {
         empresaAtual = response.payload;
         exibirDadosEmpresa(empresaAtual);
-        carregarCardapio();
+        await carregarCardapio();
     } else {
         alert("Empresa não encontrada!");
         voltarParaListagem();
@@ -40,6 +50,21 @@ function exibirDadosEmpresa(empresa) {
         </div>
     `;
 
+    let horariosHtml = '';
+    if (empresa.openingHours) {
+        horariosHtml = `
+            <h5 class="mt-3"><i class="fa fa-clock"></i> Horário de Funcionamento</h5>
+            <ul class="list-group mb-3">
+                ${Object.keys(DIAS_PT).map(dia =>
+                    `<li class="list-group-item d-flex justify-content-between">
+                        <span>${DIAS_PT[dia]}</span>
+                        <span>${empresa.openingHours[dia] ? (empresa.openingHours[dia].isOpen ? (empresa.openingHours[dia].openTime + ' às ' + empresa.openingHours[dia].closeTime) : 'Fechado') : 'Não informado'}</span>
+                    </li>`
+                ).join('')}
+            </ul>
+        `;
+    }
+
     const infoSection = document.getElementById("companyInfo");
     infoSection.innerHTML = `
         <h4 class="section-title"><i class="fas fa-building"></i> Dados da Empresa</h4>
@@ -53,17 +78,24 @@ function exibirDadosEmpresa(empresa) {
             </div>
             <div class="col-md-6">
                 <p><strong>CEP:</strong> ${empresa.cep}</p>
-                    <p><strong>Endereço:</strong> ${empresa.addressComplement || ""}</p>
+                <p><strong>Endereço:</strong> ${empresa.addressComplement || ""}</p>
                 <p><strong>Número:</strong> ${empresa.addressNumber}</p>
-            
+                ${horariosHtml}
             </div>
         </div>
     `;
 }
 
-function carregarCardapio() {
+async function carregarCardapio() {
     if (!empresaAtual || !empresaAtual.id) return;
-    const cardapio = JSON.parse(localStorage.getItem(`cardapio_${empresaAtual.id}`)) || [];
+    const token = localStorage.getItem('authToken');
+    const response = await makeRequest(
+        `Company/${empresaAtual.id}/menu`,
+        {},
+        token,
+        "GET"
+    );
+    const cardapio = (response.ok && Array.isArray(response.payload)) ? response.payload : [];
     exibirCardapio(cardapio);
 }
 
@@ -73,40 +105,71 @@ function exibirCardapio(itens) {
         container.innerHTML = "<div>Nenhum item no cardápio.</div>";
         return;
     }
-    container.innerHTML = itens.map((item, idx) => `
-        <div class="menu-item">
-            <h5>${item.nome}</h5>
-            <p>${item.ingredientes}</p>
-            <p><strong>R$ ${item.valor}</strong></p>
+    container.innerHTML = itens.map((item) => `
+        <div class="menu-item mb-3 border-bottom pb-2">
+            <h5>${item.name}</h5>
+            <p>${item.description || ""}</p>
+            <p><strong>R$ ${item.price}</strong></p>
         </div>
     `).join('');
 }
 
-function adicionarItemCardapio(e) {
+
+async function adicionarItemCardapio(e) {
     e.preventDefault();
     const nome = document.getElementById('nomeItem').value.trim();
-    const ingredientes = document.getElementById('ingredientesItem').value.trim();
+    const descricao = document.getElementById('ingredientesItem').value.trim();
     const valor = document.getElementById('valorItem').value.trim();
 
     if (!empresaAtual || !empresaAtual.id) {
         mostrarMsg("ID da empresa não encontrado!", "danger");
         return;
     }
-
-    if (!nome || !ingredientes || !valor) {
-        mostrarMsg("Preencha todos os campos!", "danger");
+    if (!nome || !valor) {
+        mostrarMsg("Preencha nome e valor!", "danger");
         return;
     }
-
-    let cardapio = JSON.parse(localStorage.getItem(`cardapio_${empresaAtual.id}`)) || [];
-    cardapio.push({ nome, ingredientes, valor });
-    localStorage.setItem(`cardapio_${empresaAtual.id}`, JSON.stringify(cardapio));
-    mostrarMsg("Item adicionado!", "success");
-
-    document.getElementById('cardapioForm').reset();
-    carregarCardapio();
+    const token = localStorage.getItem('authToken');
+    const novoItem = {
+        name: nome,
+        price: Number(valor),
+        description: descricao
+        // ingredients: [] // se quiser implementar, envie um array de strings aqui!
+    };
+    const response = await makeRequest(
+        `Company/${empresaAtual.id}/menu`,
+        novoItem,
+        token,
+        "POST"
+    );
+    if (response.ok) {
+        mostrarMsg("Item adicionado!", "success");
+        document.getElementById('cardapioForm').reset();
+        await carregarCardapio();
+    } else {
+        mostrarMsg("Erro ao adicionar item!", "danger");
+    }
 }
 
+
+// Funções extras, caso queira editar/remover itens futuramente:
+async function removerItemCardapio(itemId) {
+    const token = localStorage.getItem('authToken');
+    const response = await makeRequest(
+        `Company/${empresaAtual.id}/menu/${itemId}`,
+        {},
+        token,
+        "DELETE"
+    );
+    if (response.ok) {
+        mostrarMsg("Item removido!", "success");
+        await carregarCardapio();
+    } else {
+        mostrarMsg("Erro ao remover item!", "danger");
+    }
+}
+
+// Mostra mensagens do cardápio
 function mostrarMsg(msg, tipo) {
     const div = document.getElementById('cardapioMsg');
     div.className = `alert alert-${tipo}`;

@@ -1,3 +1,4 @@
+//utils js
 const API_BASE_URL = 'https://wikifood.gustavoanjos.com/api/';
 
 async function makeRequest(endpoint, data = {}, token = null, method = "GET") {

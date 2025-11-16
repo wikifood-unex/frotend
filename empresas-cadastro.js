@@ -12,27 +12,56 @@ function mostrarMensagem(mensagem, tipo) {
 }
 
 async function salvarEmpresa() {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-        mostrarMensagem("Você precisa estar logado para cadastrar uma empresa.", "danger");
-        return;
-    }
+    try {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            mostrarMensagem("Você precisa estar logado!", "danger");
+            return;
+        }
 
-    const novaEmpresa = {
-        name: document.getElementById('nomeEmpresa').value.trim(),
-        type: document.getElementById('tipoEmpresa').value.trim(),
-        cnpj: document.getElementById('cnpj').value.trim(),
-        cep: document.getElementById('cep').value.trim(),
-        addressNumber: document.getElementById('numero').value.trim(),
-        addressComplement: document.getElementById('endereco').value.trim(), // campo "endereço" (era complemento)
-        phone: document.getElementById('telefone').value.trim(),
-        email: document.getElementById('email').value.trim()
-    };
+        const nameInput = document.getElementById('nomeEmpresa').value.trim();
+        const typeInput = document.getElementById('tipoEmpresa').value.trim();
+        const cnpjInput = document.getElementById('cnpj').value.trim();
+        const cepInput = document.getElementById('cep').value.trim();
+        const numeroInput = document.getElementById('numero').value.trim();
+        const enderecoInput = document.getElementById('endereco').value.trim();
+        const telefoneInput = document.getElementById('telefone').value.trim();
+        const emailInput = document.getElementById('email').value.trim();
 
-    const response = await makeRequest("Company", novaEmpresa, token, "POST");
-    if (response.ok && response.payload && response.payload.id) {
-        window.location.href = `empresa-detalhes.html?id=${response.payload.id}`;
-    } else {
-        mostrarMensagem("Erro ao cadastrar empresa: " + (response.payload?.message || JSON.stringify(response.payload)), "danger");
+        if (!nameInput || !typeInput || !cnpjInput || !cepInput || !numeroInput || !enderecoInput) {
+            mostrarMensagem("Preencha todos os campos obrigatórios!", "danger");
+            return;
+        }
+
+        const novaEmpresa = {
+            Name: nameInput,
+            Type: typeInput,
+            Cnpj: cnpjInput,
+            Cep: cepInput,
+            AddressNumber: numeroInput,
+            AddressComplement: enderecoInput,
+            Phone: telefoneInput,
+            Email: emailInput
+        };
+
+        const response = await makeRequest("Company", novaEmpresa, token, "POST");
+
+        if (response.ok && response.payload && response.payload.id) {
+            mostrarMensagem("Empresa cadastrada com sucesso!", "success");
+            setTimeout(() => {
+                window.location.href = `empresa-detalhes.html?id=${response.payload.id}`;
+            }, 1500);
+        } else {
+            let erro = "Erro ao cadastrar empresa";
+            if (response.payload?.message) {
+                erro = response.payload.message;
+            } else if (response.payload?.errors) {
+                erro = JSON.stringify(response.payload.errors);
+            }
+            mostrarMensagem(erro, "danger");
+        }
+    } catch (error) {
+        console.error("Erro:", error);
+        mostrarMensagem("Erro inesperado: " + error.message, "danger");
     }
 }

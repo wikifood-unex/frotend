@@ -8,43 +8,32 @@
     <style>
         body { background-color: #f8f9fa; }
         .form-container { max-width: 800px; margin: 50px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        .preview-logo { max-width: 200px; max-height: 200px; margin-top: 10px; display: none; border-radius: 8px; }
     </style>
 </head>
 <body>
-    
-    
 <div class="container">
     <div class="form-container">
         <h2 class="text-center mb-4">Cadastro de Empresa</h2>
         <form id="formCadastro">
-
-            <!-- Logo da Empresa -->
-            <div class="mb-3">
-                <label for="logoEmpresa" class="form-label">Logo da Empresa</label>
-                <input type="file" class="form-control" id="logoEmpresa" accept="image/*">
-                <img id="previewLogo" class="preview-logo" alt="Preview da logo">
-                <small class="form-text text-muted">Formatos aceitos: JPG, PNG, GIF (máx. 5MB)</small>
-            </div>
-
-            <!-- Tipo de Empresa -->
             <div class="mb-3">
                 <label for="tipoEmpresa" class="form-label">Tipo de Empresa</label>
                 <select class="form-select" id="tipoEmpresa" required>
-                    <option value="">Selecione o tipo</option>
-                    <option value="Bar">Bar</option>
-                    <option value="Restaurante">Restaurante</option>
-                    <option value="Pizzaria">Pizzaria</option>
-                    <option value="Cafeteria">Cafeteria</option>
-                    <option value="Lanchonete">Lanchonete</option>
-                    <option value="Sorveteria">Sorveteria</option>
-                    <option value="Hamburgueria">Hamburgueria</option>
-                    <option value="Padaria">Padaria</option>
-                    <option value="Food Truck">Food Truck</option>
-                    <option value="Outro">Outro</option>
+                  <option value="">Selecione um tipo</option>
+                  <option value="Bar">Bar</option>
+                  <option value="Restaurante">Restaurante</option>
+                  <option value="Pizzaria">Pizzaria</option>
+                  <option value="Cafeteria">Cafeteria</option>
+                  <option value="Lanchonete">Lanchonete</option>
+                  <option value="Churrascaria">Churrascaria</option>
+                  <option value="SushiBar">Sushi Bar</option>
+                  <option value="FastFood">Fast Food</option>
+                  <option value="Padaria">Padaria</option>
+                  <option value="Sorveteria">Sorveteria</option>
+                  <option value="Doceria">Doceria</option>
+                  <option value="Supermercado">Supermercado</option>
+                  <option value="Outro">Outro</option>
                 </select>
             </div>
-
             <div class="mb-3">
                 <label for="nomeEmpresa" class="form-label">Nome da Empresa</label>
                 <input type="text" class="form-control" id="nomeEmpresa" required>
@@ -61,7 +50,6 @@
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" required>
             </div>
-
             <hr class="my-4">
             <h5>Endereço</h5>
             <div class="row mb-3">
@@ -71,16 +59,13 @@
                 </div>
                 <div class="col-md-4">
                     <label for="endereco" class="form-label">Endereço</label>
-                    <input type="text" class="form-control" id="endereco" placeholder="Av Francisco Ribeiro Jr, Centro itabuna Bahia" required>
-                    <div class="form-text">Exemplo: Av Francisco Ribeiro Jr, Centro itabuna Bahia</div>
+                    <input type="text" class="form-control" id="endereco" required>
                 </div>
                 <div class="col-md-4">
                     <label for="numero" class="form-label">Número</label>
                     <input type="text" class="form-control" id="numero" required>
                 </div>
-                
             </div>
-
             <div id="msgCadastro" class="alert" style="display: none;"></div>
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary">Cadastrar Empresa</button>

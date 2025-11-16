@@ -1,44 +1,46 @@
-const LOGOPADRAO = "logo-padrao.jpg";
-let empresasGlobal = [];
-
-window.addEventListener("DOMContentLoaded", carregarEmpresas);
-
-if(document.getElementById('searchInput')) document.getElementById('searchInput').addEventListener('input', filtrarEmpresas);
+let empresasOriginais = [];
 
 async function carregarEmpresas() {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-        alert("Você precisa estar logado!");
-        window.location.href = "login.html";
-        return;
+    try {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            document.getElementById('listaEmpresas').innerHTML = '<p class="alert alert-danger">Você precisa estar logado!</p>';
+            return;
+        }
+
+        const response = await makeRequest('Company', null, token, 'GET');
+        
+        if (response.ok && Array.isArray(response.payload)) {
+            empresasOriginais = response.payload;
+            exibirEmpresas(empresasOriginais);
+        } else {
+            document.getElementById('listaEmpresas').innerHTML = '<p class="alert alert-warning">Nenhuma empresa encontrada.</p>';
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+        document.getElementById('listaEmpresas').innerHTML = '<p class="alert alert-danger">Erro ao carregar empresas.</p>';
     }
-    document.getElementById('loadingSpinner').style.display = "block";
-    const response = await makeRequest("Company", {}, token, "GET");
-    document.getElementById('loadingSpinner').style.display = "none";
-    empresasGlobal = response.ok && Array.isArray(response.payload) ? response.payload : [];
-    exibirEmpresas(empresasGlobal);
 }
 
-function exibirEmpresas(empresasParaExibir) {
-    const container = document.getElementById("companiesContainer");
-    const emptyState = document.getElementById("emptyState");
-    if (!empresasParaExibir || empresasParaExibir.length === 0) {
-        container.innerHTML = "";
-        emptyState.style.display = "block";
+function exibirEmpresas(empresas) {
+    const container = document.getElementById('listaEmpresas');
+    
+    if (!empresas || empresas.length === 0) {
+        container.innerHTML = '<p class="alert alert-info">Nenhuma empresa encontrada.</p>';
         return;
     }
-    emptyState.style.display = "none";
-    container.innerHTML = empresasParaExibir.map(empresa => `
+
+    container.innerHTML = empresas.map(empresa => `
         <div class="company-card" onclick="verDetalhes('${empresa.id}')">
-            <img src="${empresa.logoUrl || LOGOPADRAO}" alt="Logo ${empresa.name}" class="company-logo">
-            <div>
-                <h5>${empresa.name}</h5>
-                <span class="badge bg-primary">${empresa.type || ""}</span>
-                <p>
-                    CEP: ${empresa.cep}<br>
-                    Nº: ${empresa.addressNumber || 'SN'}<br>
-                    Endereço: ${empresa.addressComplement || ""}
-                </p>
+            <div class="d-flex">
+                <img src="${empresa.logoUrl || 'logo-padrao.jpg'}" alt="Logo" class="company-logo">
+                <div class="flex-grow-1">
+                    <h5>${empresa.name || 'Sem nome'}</h5>
+                    <span class="badge bg-primary">${empresa.type || 'N/A'}</span>
+                    <p class="mb-0 mt-2"><strong>CNPJ:</strong> ${empresa.cnpj || 'N/A'}</p>
+                    <p class="mb-0"><strong>Endereço:</strong> ${empresa.addressComplement || ''} nº ${empresa.addressNumber || 'SN'}</p>
+                    <p class="mb-0"><strong>CEP:</strong> ${empresa.cep || 'N/A'}</p>
+                </div>
             </div>
         </div>
     `).join('');
@@ -49,10 +51,30 @@ function verDetalhes(empresaId) {
 }
 
 function filtrarEmpresas() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    const empresasFiltradas = empresasGlobal.filter(empresa => {
-        const nome = empresa.name.toLowerCase();
-        return nome.includes(searchTerm);
+    const nome = document.getElementById('filtroNome').value.toLowerCase();
+    const tipo = document.getElementById('filtroTipo').value;
+
+    const empresasFiltradas = empresasOriginais.filter(empresa => {
+        const nomeMatch = !nome || (empresa.name && empresa.name.toLowerCase().includes(nome));
+        const tipoMatch = !tipo || empresa.type === tipo;
+        return nomeMatch && tipoMatch;
     });
+
     exibirEmpresas(empresasFiltradas);
 }
+
+function limparFiltros() {
+    document.getElementById('filtroNome').value = '';
+    document.getElementById('filtroTipo').value = '';
+    exibirEmpresas(empresasOriginais);
+}
+
+// Event Listeners
+document.getElementById('btnFiltrar').addEventListener('click', filtrarEmpresas);
+document.getElementById('btnLimpar').addEventListener('click', limparFiltros);
+document.getElementById('filtroNome').addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') filtrarEmpresas();
+});
+
+// Carregar ao abrir
+window.addEventListener('load', carregarEmpresas);
