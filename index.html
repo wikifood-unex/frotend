@@ -4,27 +4,50 @@
 <meta charset="UTF-8">
 <title>Receitas WikiFood</title>
 <link rel="stylesheet" href="wikifood.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
 
-<!-- Menu Superior (NAV) -->
-<nav class="navbar">
-  <div class="logo">WikiFood <img src="logo-padrao.jpg" alt="" class="icon-image"></div>
-  <ul class="nav-links">
-    <li><a href="index.html">Início</a></li>
-    <li><a href="empresas-listagem.html">Empresas</a></li>
-    <li><a href="cadastros.html">Cadastre-se aqui!</a></li>
-    
-  </ul>
+<!-- NAVBAR COM FUNDO LARANJA E LETRAS BRANCAS -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid">
+    <!-- Logo -->
+    <a class="navbar-brand text-white d-flex align-items-center" href="index.html">
+      <img src="logo-padrao.jpg" alt="WikiFood Logo" style="height:40px; margin-right:8px;">
+      WikiFood
+    </a>
+
+    <!-- Botão hamburguer -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto" style="gap: 1rem;">
+        <li class="nav-item">
+          <a class="nav-link text-white" href="index.html">Início</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="empresas-listagem.html">Empresas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="cadastros.html">Cadastre-se aqui!</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>
+
 
 <div class="background-container">
     <div class="content">
 <div class="container">
-  <h2>Lista de Receitas</h2>
-  <div id="receitasList"></div>
-</div>
+<h2 class="titulo-branco">Lista de Receitas</h2>
 <img src="wikifood fundo.jpg" alt="" class="imgfundo">
+
+ <div id="receitasList"></div>
+</div>
 <script>
 const token = 'Bearer SEU_TOKEN_AQUI'; // Substitua pelo token válido
 
@@ -52,27 +75,31 @@ async function carregarReceitas() {
       return;
     }
 
-    receitas.forEach(r => {
-      const div = document.createElement('div');
-      div.className = 'receita';
+receitas.forEach(r => {
+  const div = document.createElement('div');
+  div.className = 'receita';
 
-      const imgDiv = document.createElement('div');
-      imgDiv.className = 'placeholder-img';
-      imgDiv.textContent = 'Imagem não carregada';
-      div.appendChild(imgDiv);
+  const imgDiv = document.createElement('div');
+  imgDiv.className = 'placeholder-img';
+  imgDiv.textContent = 'Imagem não carregada';
+  div.appendChild(imgDiv);
 
-      const title = document.createElement('div');
-      title.className = 'title';
-      title.textContent = r.title || 'Sem título';
-      div.appendChild(title);
+  const title = document.createElement('div');
+  title.className = 'title';
+  title.textContent = r.title || 'Sem título';
+  div.appendChild(title);
 
-      const desc = document.createElement('div');
-      desc.className = 'description';
-      desc.textContent = r.description || 'Sem descrição';
-      div.appendChild(desc);
+  const desc = document.createElement('div');
+  desc.className = 'description';
+  desc.textContent = r.description || 'Sem descrição';
+  div.appendChild(desc);
 
-      listContainer.appendChild(div);
-    });
+  // 🔑 Torna o card clicável
+  div.addEventListener('click', () => expandCard(div));
+
+  listContainer.appendChild(div);
+});
+
 
   } catch (error) {
     listContainer.innerHTML = 'Erro de comunicação com a API!';
@@ -81,6 +108,25 @@ async function carregarReceitas() {
 }
 
 carregarReceitas();
+function expandCard(card) {
+  let overlay = document.createElement("div");
+  overlay.classList.add("overlay", "active");
+  document.body.appendChild(overlay);
+
+  card.classList.add("expanded");
+
+  overlay.addEventListener("click", () => {
+    // aplica fade-out antes de remover
+    card.style.animation = "fadeOut 0.4s forwards";
+    setTimeout(() => {
+      card.classList.remove("expanded");
+      card.style.animation = ""; // limpa animação
+      overlay.remove();
+    }, 400); // tempo igual ao da animação
+  });
+}
+
+
 </script>
 <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="voltar-topo">
   Voltar ao Início
@@ -88,11 +134,15 @@ carregarReceitas();
 
 </div>
 </div>
-</footer>
 <footer class="footer">
   <p>&copy; 2025 WikiFood.</p>
   <p>Todos os direitos reservados.</p>
-  <p>Sabores do Brasil e do mundo em um só lugar.</p>
+  <p>Sabores do Brasil e do mundo em um só lugar.
+  <div class="social-icons">
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-facebook"></i></a>
+    <a href="#"><i class="fab fa-whatsapp"></i></a>
+  </div>
 </footer>
 </body>
 </html>
