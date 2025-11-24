@@ -9,7 +9,7 @@ async function carregarEmpresas() {
         }
 
         const response = await makeRequest('Company', null, token, 'GET');
-        
+
         if (response.ok && Array.isArray(response.payload)) {
             empresasOriginais = response.payload;
             exibirEmpresas(empresasOriginais);
@@ -24,7 +24,7 @@ async function carregarEmpresas() {
 
 function exibirEmpresas(empresas) {
     const container = document.getElementById('listaEmpresas');
-    
+
     if (!empresas || empresas.length === 0) {
         container.innerHTML = '<p class="alert alert-info">Nenhuma empresa encontrada.</p>';
         return;
@@ -33,7 +33,7 @@ function exibirEmpresas(empresas) {
     container.innerHTML = empresas.map(empresa => `
         <div class="company-card" onclick="verDetalhes('${empresa.id}')">
             <div class="d-flex">
-                <img src="${empresa.logoUrl || 'logo-padrao.jpg'}" alt="Logo" class="company-logo">
+                <img src="${empresa.logoUrl || '../assets/logo-padrao.jpg'}" alt="Logo" class="company-logo">
                 <div class="flex-grow-1">
                     <h5>${empresa.name || 'Sem nome'}</h5>
                     <span class="badge bg-primary">${empresa.type || 'N/A'}</span>

@@ -1,0 +1,23 @@
+body { font-family: Arial, sans-serif; background:#f5f6f8; margin:0; padding:30px; }
+.card { max-width:500px; margin:auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,0.08);}
+h2 { margin-top:0; }
+label { display:block; margin-top:10px; font-weight:600; }
+input, textarea { width:100%; padding:10px; margin-top:6px; border:1px solid #dcdcdc; border-radius:6px; box-sizing:border-box; }
+button { margin-top:14px; width:100%; padding:10px; border:none; border-radius:6px; background:#0b69ff; color:#fff; cursor:pointer; font-weight:700; transition:background 0.3s; }
+button:hover { background:#095cd4; }
+button.logout { background:#f33; }
+.msg { margin-top:12px; padding:10px; border-radius:6px; min-height:24px; }
+.msg.success { background:#e6ffed; color:#036a1b; border:1px solid #b3ffc6; }
+.msg.error { background:#ffe6e6; color:#7a0b0b; border:1px solid #ffb3b3; }
+.form-section { display:none; }
+.active { display:block; }
+.toggle-form { text-align:center; margin-top:15px; }
+.toggle-form a { color:#0b69ff; text-decoration:none; cursor:pointer; font-weight:600; }
+.toggle-form a:hover { text-decoration:underline; }
+
+button.secondary {
+  background: #6c757d;
+}
+button.secondary:hover {
+  background: #5a6268;
+}

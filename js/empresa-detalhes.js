@@ -1,5 +1,5 @@
 let empresaAtual = null;
-const LOGOPADRAO = "logo-padrao.jpg";
+const LOGOPADRAO = "../assets/logo-padrao.jpg";
 
 const DIAS_PT = {
     sunday: 'Domingo',
@@ -56,11 +56,11 @@ function exibirDadosEmpresa(empresa) {
             <h5 class="mt-3"><i class="fa fa-clock"></i> Horário de Funcionamento</h5>
             <ul class="list-group mb-3">
                 ${Object.keys(DIAS_PT).map(dia =>
-                    `<li class="list-group-item d-flex justify-content-between">
+            `<li class="list-group-item d-flex justify-content-between">
                         <span>${DIAS_PT[dia]}</span>
                         <span>${empresa.openingHours[dia] ? (empresa.openingHours[dia].isOpen ? (empresa.openingHours[dia].openTime + ' às ' + empresa.openingHours[dia].closeTime) : 'Fechado') : 'Não informado'}</span>
                     </li>`
-                ).join('')}
+        ).join('')}
             </ul>
         `;
     }
