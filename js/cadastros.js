@@ -159,6 +159,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   if (token) showRecipeSection();
 
   document.getElementById('btn-skip').addEventListener('click', ()=>{
-    window.location.href = 'index.html';
+    window.location.href = '/index.html';
   });
 });
