@@ -68,13 +68,50 @@ document.getElementById('btn-add-recipe').addEventListener('click', async () => 
     return;
   }
 
-  const data = {
-    title,
-    lore,
-    description,
-    image: imageUrl || null, // envia a URL se tiver, senão manda null
-    recommendations: []
-  };
+ document.getElementById('btn-add-recipe').addEventListener('click', async () => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    showMessage('Você precisa estar logado para cadastrar receitas!');
+    return;
+  }
+
+  const title = document.getElementById('recipe-title').value.trim();
+  const lore = document.getElementById('recipe-lore').value.trim();
+  const description = lore;
+
+  const imageFile = document.getElementById('recipe-file').files[0]; // <--- PEGA O ARQUIVO
+
+  if (!title || !lore) {
+    showMessage('Preencha todos os campos obrigatórios!');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('title', title);
+  formData.append('lore', lore);
+  formData.append('description', description);
+
+  // se tiver imagem, adiciona
+  if (imageFile) {
+    formData.append('image', imageFile);
+  }
+
+  showMessage('Enviando receita...', 'success');
+
+  const result = await makeRequest('/Receipt', formData, token, true);
+
+  if (result.ok) {
+    showMessage('Receita cadastrada com sucesso!', 'success');
+
+    // limpar inputs
+    document.getElementById('recipe-title').value = '';
+    document.getElementById('recipe-lore').value = '';
+    document.getElementById('recipe-file').value = '';
+  } else {
+    showMessage(result.payload?.message || 'Erro ao cadastrar receita', 'error');
+  }
+});
+
 
   showMessage('Enviando receita...', 'success');
 
@@ -110,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('btn-skip').addEventListener('click', () => {
   // Redireciona para a página inicial
-  window.location.href = '../index.html'; 
+  window.location.href = 'index.html'; 
 });
 
 });
