@@ -153,6 +153,15 @@ document.getElementById('btn-add-recipe').addEventListener('click', async ()=>{
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}` // IMPORTANTE: NÃO DEFINIR Content-Type
+      const res = await fetch(`${API_BASE_URL}/Receipt`, {
+  method: 'POST',
+  headers: {
+    'Authorization': `Bearer ${token}`,
+    'Accept': 'application/json' 
+  },
+  body: form
+});
+
     },
     body: form
   });
