@@ -29,21 +29,33 @@ function showRecipeSection(){
   msg.textContent='';
 }
 
-// Requisição geral
 async function makeRequest(endpoint, data, token=null, isFormData=false){
-  const headers = token ? { 'Authorization': 'Bearer '+token } : {};
-  if(!isFormData) headers['Content-Type']='application/json';
+  const headers = {};
 
-  const res = await fetch(API_BASE_URL + endpoint,{
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+
+  // Quando é FormData NÃO define Content-Type (correto)
+  // Mas sempre define Accept
+  headers['Accept'] = 'application/json';
+
+  const options = {
     method: 'POST',
     headers,
     body: isFormData ? data : JSON.stringify(data)
-  });
+  };
 
-  const contentType = res.headers.get('content-type') || '';
-  const payload = contentType.includes('application/json') ? await res.json() : await res.text();
+  const res = await fetch(API_BASE_URL + endpoint, options);
+
+  let payload;
+  try {
+    payload = await res.json();
+  } catch {
+    payload = await res.text();
+  }
+
   return { ok:res.ok, status:res.status, payload };
 }
+
 
 
 // LOGIN
