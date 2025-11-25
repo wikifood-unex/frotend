@@ -117,7 +117,7 @@ document.getElementById('btn-register').addEventListener('click', async ()=>{
 });
 
 
-// CADASTRAR RECEITA (MULTIPART FORM-DATA CORRETO)
+// CADASTRAR RECEITA (USANDO imageUrl LEGADO)
 document.getElementById('btn-add-recipe').addEventListener('click', async ()=>{
 
   const token = localStorage.getItem('authToken');
@@ -129,15 +129,10 @@ document.getElementById('btn-add-recipe').addEventListener('click', async ()=>{
   const title = document.getElementById('recipe-title').value.trim();
   const lore = document.getElementById('recipe-lore').value.trim();
   const description = document.getElementById('recipe-ingredients').value.trim();
-  const imageFile = document.getElementById('recipe-file').files[0];
+  const imageUrl = document.getElementById('recipe-url').value.trim(); // 👉 CAMPO NOVO
 
-  if (!title || !lore || !description) {
-    showMessage('Preencha todos os campos obrigatórios!');
-    return;
-  }
-
-  if (!imageFile) {
-    showMessage('Selecione uma imagem!');
+  if (!title || !lore || !description || !imageUrl) {
+    showMessage('Preencha todos os campos!');
     return;
   }
 
@@ -145,7 +140,7 @@ document.getElementById('btn-add-recipe').addEventListener('click', async ()=>{
   form.append('title', title);
   form.append('lore', lore);
   form.append('description', description);
-  form.append('image', imageFile); // CAMPO CORRETO PARA O BACKEND
+  form.append('imageUrl', imageUrl); // 👉 AGREGA A URL DA IMAGEM
 
   showMessage('Enviando receita...', 'success');
 
@@ -154,27 +149,16 @@ document.getElementById('btn-add-recipe').addEventListener('click', async ()=>{
     headers: {
       'Authorization': `Bearer ${token}`,
       'Accept': 'application/json'
-      // ✨ NÃO DEFINIR Content-Type AQUI!
     },
     body: form
   });
 
-  let data;
-  try { 
-    data = await res.json(); 
-  } catch { 
-    data = await res.text(); 
-  }
+  const data = await res.json().catch(() => null);
 
   if (res.ok) {
     showMessage('Receita cadastrada com sucesso!', 'success');
-    document.getElementById('recipe-title').value='';
-    document.getElementById('recipe-lore').value='';
-    document.getElementById('recipe-ingredients').value='';
-    document.getElementById('recipe-file').value='';
   } else {
     showMessage(data?.message || 'Erro ao cadastrar receita');
-    console.log("Erro completo:", data);
   }
 });
 
