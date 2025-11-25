@@ -152,23 +152,19 @@ document.getElementById('btn-add-recipe').addEventListener('click', async ()=>{
   const res = await fetch(`${API_BASE_URL}/Receipt`, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${token}` // IMPORTANTE: NÃO DEFINIR Content-Type
-      const res = await fetch(`${API_BASE_URL}/Receipt`, {
-  method: 'POST',
-  headers: {
-    'Authorization': `Bearer ${token}`,
-    'Accept': 'application/json' 
-  },
-  body: form
-});
-
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/json'
+      // ✨ NÃO DEFINIR Content-Type AQUI!
     },
     body: form
   });
 
   let data;
-  try { data = await res.json(); }
-  catch { data = await res.text(); }
+  try { 
+    data = await res.json(); 
+  } catch { 
+    data = await res.text(); 
+  }
 
   if (res.ok) {
     showMessage('Receita cadastrada com sucesso!', 'success');
@@ -181,6 +177,7 @@ document.getElementById('btn-add-recipe').addEventListener('click', async ()=>{
     console.log("Erro completo:", data);
   }
 });
+
 
 
 
