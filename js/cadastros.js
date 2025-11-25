@@ -30,19 +30,24 @@ function showRecipeSection(){
 }
 
 async function makeRequest(endpoint, data, token=null, isFormData=false){
-  const headers = {};
+  const headers = {
+    'Accept': 'application/json'
+  };
 
-  if (token) headers['Authorization'] = 'Bearer ' + token;
+  if (!isFormData) {
+    headers['Content-Type'] = 'application/json';
+  }
 
-  // Quando é FormData NÃO define Content-Type (correto)
-  // Mas sempre define Accept
-  headers['Accept'] = 'application/json';
+  if (token) {
+    headers['Authorization'] = 'Bearer ' + token;
+  }
 
   const options = {
     method: 'POST',
     headers,
     body: isFormData ? data : JSON.stringify(data)
   };
+
 
   const res = await fetch(API_BASE_URL + endpoint, options);
 
