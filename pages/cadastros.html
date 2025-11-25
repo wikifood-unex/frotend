@@ -35,26 +35,29 @@
     </div>
   </div>
 
-<!-- CADASTRO DE RECEITA -->
-<div id="recipe-section" class="form-section">
-  <label>Título da Receita</label>
-  <input id="recipe-title" type="text" placeholder="Título">
+  <!-- CADASTRO DE RECEITA -->
+  <div id="recipe-section" class="form-section">
+    <label>Título da Receita</label>
+    <input id="recipe-title" type="text" placeholder="Título">
 
-  <label>História / Preparo</label>
-  <textarea id="recipe-lore" rows="4"></textarea>
+    <label>História / Preparo</label>
+    <textarea id="recipe-lore" rows="4"></textarea>
 
-  <label>Ingredientes (separados por vírgula)</label>
-  <textarea id="recipe-ingredients" rows="2"></textarea>
+    <label>Ingredientes (separados por vírgula)</label>
+    <textarea id="recipe-ingredients" rows="2"></textarea>
 
-  <label>URL da Imagem da Receita</label>
-  <input id="recipe-url" type="text" placeholder="https://exemplo.com/imagem.jpg">
+    <!-- NOVO CAMPO: Upload de Arquivo -->
+    <label>Imagem da Receita (arquivo)</label>
+    <input id="recipe-image" type="file" accept="image/*">
 
-  <button id="btn-add-recipe">Cadastrar Receita</button>
-  <button id="btn-skip" class="secondary">Pular e Ir para Página Inicial</button>
-  <button id="btn-logout" class="logout">Sair</button>
-</div>
+    <!-- CAMPO LEGADO -->
+    <label>URL da Imagem da Receita (opcional)</label>
+    <input id="recipe-url" type="text" placeholder="https://exemplo.com/imagem.jpg">
 
-
+    <button id="btn-add-recipe">Cadastrar Receita</button>
+    <button id="btn-skip" class="secondary">Pular e Ir para Página Inicial</button>
+    <button id="btn-logout" class="logout">Sair</button>
+  </div>
 
   <div id="message" class="msg"></div>
 </div>
