@@ -163,7 +163,7 @@ function registerEventListeners() {
   else debugLog('#link-login não encontrado');
 
   const btnSkip = document.getElementById('btn-skip');
-  if (btnSkip) btnSkip.addEventListener('click', () => { window.location.href = 'index.html'; });
+  if (btnSkip) btnSkip.addEventListener('click', () => { window.location.href = '/index.html'; });
   else debugLog('#btn-skip não encontrado');
 
   debugLog('Event listeners registrados com sucesso');
