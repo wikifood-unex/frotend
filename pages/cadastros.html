@@ -35,7 +35,7 @@
     </div>
   </div>
 
- <!-- CADASTRO DE RECEITA -->
+<!-- CADASTRO DE RECEITA -->
 <div id="recipe-section" class="form-section">
   <label>Título da Receita</label>
   <input id="recipe-title" type="text" placeholder="Título">
@@ -46,15 +46,14 @@
   <label>Ingredientes (separados por vírgula)</label>
   <textarea id="recipe-ingredients" rows="2"></textarea>
 
-  <label>Imagem da Receita</label>
-  <!-- AGORA É UM INPUT FILE -->
-  <input type="file" id="recipe-file" name="image" accept="image/*">
-
+  <label>URL da Imagem da Receita</label>
+  <input id="recipe-url" type="text" placeholder="https://exemplo.com/imagem.jpg">
 
   <button id="btn-add-recipe">Cadastrar Receita</button>
   <button id="btn-skip" class="secondary">Pular e Ir para Página Inicial</button>
   <button id="btn-logout" class="logout">Sair</button>
 </div>
+
 
 
   <div id="message" class="msg"></div>
