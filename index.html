@@ -73,37 +73,46 @@ async function carregarReceitas() {
       return;
     }
 
-receitas.forEach(r => {
-  const div = document.createElement('div');
-  div.className = 'receita';
+    receitas.forEach(r => {
+      const div = document.createElement('div');
+      div.className = 'receita';
 
-  const imgDiv = document.createElement('div');
-  imgDiv.className = 'placeholder-img';
-  imgDiv.textContent = 'Imagem não carregada';
-  div.appendChild(imgDiv);
+      // ---------- EXIBIR IMAGEM DA API ----------
+      const img = document.createElement('img');
+      img.className = 'receita-img';
 
-  const title = document.createElement('div');
-  title.className = 'title';
-  title.textContent = r.title || 'Sem título';
-  div.appendChild(title);
+      if (r.imageUrl) {
+        img.src = "https://wikifood.gustavoanjos.com" + r.imageUrl;
+        img.alt = r.title || "Imagem da receita";
+      } else {
+        img.src = "assets/placeholder.jpg"; // imagem padrão
+        img.alt = "Imagem não disponível";
+      }
 
-  const desc = document.createElement('div');
-  desc.className = 'description';
-  desc.textContent = r.description || 'Sem descrição';
-  div.appendChild(desc);
+      div.appendChild(img);
+      // -------------------------------------------
 
-  // 🔑 Torna o card clicável
-  div.addEventListener('click', () => expandCard(div));
+      const title = document.createElement('div');
+      title.className = 'title';
+      title.textContent = r.title || 'Sem título';
+      div.appendChild(title);
 
-  listContainer.appendChild(div);
-});
+      const desc = document.createElement('div');
+      desc.className = 'description';
+      desc.textContent = r.description || 'Sem descrição';
+      div.appendChild(desc);
 
+      div.addEventListener('click', () => expandCard(div));
+
+      listContainer.appendChild(div);
+    });
 
   } catch (error) {
     listContainer.innerHTML = 'Erro de comunicação com a API!';
     console.error(error);
   }
 }
+
 
 carregarReceitas();
 function expandCard(card) {
@@ -144,4 +153,3 @@ function expandCard(card) {
 </footer>
 </body>
 </html>
-
