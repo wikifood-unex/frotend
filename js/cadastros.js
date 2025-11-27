@@ -183,7 +183,7 @@ function registerEventListeners() {
   });
   document.getElementById('link-register')?.addEventListener('click', (e) => { e.preventDefault(); showRegister(); });
   document.getElementById('link-login')?.addEventListener('click', (e) => { e.preventDefault(); showLogin(); });
-  document.getElementById('btn-skip')?.addEventListener('click', () => { window.location.href = 'index.html'; });
+  document.getElementById('btn-skip')?.addEventListener('click', () => { window.location.href = '/index.html'; });
 }
 
 // Inicialização
