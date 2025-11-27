@@ -114,9 +114,13 @@ async function expandCard(card, id) {
   overlay.classList.add("overlay", "active");
   document.body.appendChild(overlay);
 
-  // container extra para o lore
+  // container da lore separado e estilizado
   let loreBox = document.createElement("div");
   loreBox.classList.add("lore-box");
+  loreBox.style.marginTop = "15px";
+  loreBox.style.paddingTop = "10px";
+  loreBox.style.borderTop = "1px solid rgba(255,255,255,0.3)";
+  loreBox.style.whiteSpace = "pre-line"; // permite parágrafos
   loreBox.textContent = "Carregando histórico da receita...";
   card.appendChild(loreBox);
 
@@ -171,3 +175,4 @@ async function expandCard(card, id) {
 
 </body>
 </html>
+
