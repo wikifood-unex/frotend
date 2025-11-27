@@ -221,12 +221,21 @@ body {
   background-color: #e65c00;
 }
 .footer {
-  background-color: #ff6600;
+ background-color: #ff6600;
   color: #fff;
   text-align: center;
   padding: 20px;
   font-size: 0.9rem;
   box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  z-index: 1000;
+  padding-bottom: 50px; /* ajustar se cobrir algo da página */
 }
 .navbar-nav .nav-link,
 .nav-links .nav-link {
