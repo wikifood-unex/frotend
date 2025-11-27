@@ -15,7 +15,7 @@ async function salvarEmpresa() {
     try {
         const token = localStorage.getItem('authToken');
         if (!token) {
-            mostrarMensagem("Você precisa estar logado!", "danger");
+            mostrarMensagem('Você precisa estar logado!', 'danger');
             return;
         }
 
@@ -28,8 +28,32 @@ async function salvarEmpresa() {
         const telefoneInput = document.getElementById('telefone').value.trim();
         const emailInput = document.getElementById('email').value.trim();
 
-        if (!nameInput || !typeInput || !cnpjInput || !cepInput || !numeroInput || !enderecoInput) {
-            mostrarMensagem("Preencha todos os campos obrigatórios!", "danger");
+        // Validação CNPJ (14 dígitos, permite formatação)
+        const cleanCnpj = cnpjInput.replace(/\D/g, '');
+        if (!cleanCnpj || cleanCnpj.length !== 14) {
+            mostrarMensagem('CNPJ deve ter 14 dígitos (00.000.000/0001-00)', 'danger');
+            document.getElementById('cnpj').focus();
+            return;
+        }
+
+        // Validação Telefone (11 dígitos, permite formatação como (73) 99999-9999)
+        const cleanTelefone = telefoneInput.replace(/\D/g, '');
+        if (!cleanTelefone || cleanTelefone.length !== 11) {
+            mostrarMensagem('Telefone deve ter 11 dígitos (73) 99999-9999)', 'danger');
+            document.getElementById('telefone').focus();
+            return;
+        }
+
+        // Validação CEP (8 dígitos, permite formatação como 45600-000)
+        const cleanCep = cepInput.replace(/\D/g, '');
+        if (!cleanCep || cleanCep.length !== 8) {
+            mostrarMensagem('CEP deve ter 8 dígitos (45600-000)', 'danger');
+            document.getElementById('cep').focus();
+            return;
+        }
+
+        if (!nameInput || !typeInput || !numeroInput || !enderecoInput || !emailInput) {
+            mostrarMensagem('Preencha todos os campos obrigatórios!', 'danger');
             return;
         }
 
@@ -44,7 +68,7 @@ async function salvarEmpresa() {
             Email: emailInput
         };
 
-        const response = await makeRequest("Company", novaEmpresa, token, "POST");
+        const response = await makeRequest('/Company', novaEmpresa, token, 'POST');
 
         if (response.ok && response.payload && response.payload.id) {
             mostrarMensagem("Empresa cadastrada com sucesso!", "success");
