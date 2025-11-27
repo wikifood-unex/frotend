@@ -5,7 +5,6 @@
 <title>Receitas WikiFood</title>
 <link rel="stylesheet" href="css/wikifood.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -40,13 +39,14 @@
   </div>
 </nav>
 
-
 <div class="background-container">
-    <div class="content">
-<div class="container">
-<h2 class="titulo-branco">Lista de Receitas</h2>
- <div id="receitasList"></div>
-</div>
+  <div class="content">
+    <div class="container">
+      <h2 class="titulo-branco">Lista de Receitas</h2>
+      <div id="receitasList"></div>
+    </div>
+
+<!-- ===================== SCRIPT CORRIGIDO ===================== -->
 <script>
 const token = 'Bearer SEU_TOKEN_AQUI'; // Substitua pelo token válido
 
@@ -56,9 +56,7 @@ async function carregarReceitas() {
 
   try {
     const response = await fetch('https://wikifood.gustavoanjos.com/api/Receipt', {
-      headers: {
-        'Authorization': token
-      }
+      headers: { 'Authorization': token }
     });
 
     if (!response.ok) {
@@ -77,33 +75,28 @@ async function carregarReceitas() {
     receitas.forEach(r => {
       const div = document.createElement('div');
       div.className = 'receita';
+      div.dataset.id = r.id;
 
-      // ---------- EXIBIR IMAGEM DA API ----------
+      // IMAGEM
       const img = document.createElement('img');
       img.className = 'receita-img';
-
-      if (r.imageUrl) {
-        img.src = "https://wikifood.gustavoanjos.com" + r.imageUrl;
-        img.alt = r.title || "Imagem da receita";
-      } else {
-        img.src = "assets/placeholder.jpg"; // imagem padrão
-        img.alt = "Imagem não disponível";
-      }
-
+      img.src = r.imageUrl ? "https://wikifood.gustavoanjos.com" + r.imageUrl : "assets/placeholder.jpg";
+      img.alt = r.title || "Imagem da receita";
       div.appendChild(img);
-      // -------------------------------------------
 
+      // TÍTULO
       const title = document.createElement('div');
       title.className = 'title';
       title.textContent = r.title || 'Sem título';
       div.appendChild(title);
 
+      // DESCRIÇÃO
       const desc = document.createElement('div');
       desc.className = 'description';
       desc.textContent = r.description || 'Sem descrição';
       div.appendChild(desc);
 
-      div.addEventListener('click', () => expandCard(div));
+      div.addEventListener('click', () => expandCard(div, r.id));
 
       listContainer.appendChild(div);
     });
@@ -114,44 +107,67 @@ async function carregarReceitas() {
   }
 }
 
-
 carregarReceitas();
-function expandCard(card) {
+
+async function expandCard(card, id) {
   let overlay = document.createElement("div");
   overlay.classList.add("overlay", "active");
   document.body.appendChild(overlay);
 
+  // container extra para o lore
+  let loreBox = document.createElement("div");
+  loreBox.classList.add("lore-box");
+  loreBox.textContent = "Carregando histórico da receita...";
+  card.appendChild(loreBox);
+
+  // busca do histórico
+  try {
+    const response = await fetch(`https://wikifood.gustavoanjos.com/api/Receipt/${id}/lore`, {
+      headers: { 'Authorization': token }
+    });
+
+    if (response.ok) {
+      const lore = await response.text();
+      loreBox.textContent = lore || "Nenhum histórico disponível.";
+    } else {
+      loreBox.textContent = "Histórico não disponível.";
+    }
+  } catch {
+    loreBox.textContent = "Erro ao carregar histórico.";
+  }
+
   card.classList.add("expanded");
 
   overlay.addEventListener("click", () => {
-    // aplica fade-out antes de remover
     card.style.animation = "fadeOut 0.4s forwards";
     setTimeout(() => {
       card.classList.remove("expanded");
-      card.style.animation = ""; // limpa animação
+      card.style.animation = "";
+      loreBox.remove();
       overlay.remove();
-    }, 400); // tempo igual ao da animação
+    }, 400);
   });
 }
-
-
 </script>
+<!-- ============================================================ -->
+
 <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="voltar-topo">
   Voltar ao Início
 </button>
 
+  </div>
 </div>
-</div>
+
 <footer class="footer">
   <p>&copy; 2025 WikiFood.</p>
   <p>Todos os direitos reservados.</p>
-  <p>Sabores do Brasil e do mundo em um só lugar.
+  <p>Sabores do Brasil e do mundo em um só lugar.</p>
   <div class="social-icons">
     <a href="#"><i class="fab fa-instagram"></i></a>
     <a href="#"><i class="fab fa-facebook"></i></a>
     <a href="#"><i class="fab fa-whatsapp"></i></a>
   </div>
 </footer>
+
 </body>
 </html>
-
