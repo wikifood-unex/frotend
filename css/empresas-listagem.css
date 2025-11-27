@@ -217,6 +217,7 @@ body {
   font-weight: bold;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   transition: background-color 0.3s ease;
+  overflow: visible;
 }
 body, html {
   overflow-x: hidden;
@@ -227,18 +228,19 @@ body, html {
   background-color: #e65c00;
 }
  .footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   background-color: #ff6600;
   color: white;
   text-align: center;
   padding: 20px;
   font-size: 0.9rem;
   box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
   z-index: 1000;
-  height: 60px; /* altura definida */
+  min-height: 60px; /* altura mínima */
+  overflow: visible;
 }
 
 .navbar-nav .nav-link,
